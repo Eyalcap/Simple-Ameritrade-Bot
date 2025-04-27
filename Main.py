@@ -22,7 +22,7 @@ def start(thresh, limit, blnc, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10):
         params.update({'refresh_token': ref_token})
         params.update({'client_id': key})
 
-        return requests.post(url, data=params).json()
+        return requests.post(url, data=params, timeout=60).json()
 
     # Use if refresh token expires
     def refresh_token():
@@ -34,14 +34,14 @@ def start(thresh, limit, blnc, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10):
         params.update({'access_type': 'offline'})
         params.update({'client_id': key})
 
-        return requests.post(url, data=params).json()
+        return requests.post(url, data=params, timeout=60).json()
 
     def get_account(id, token):
         url = 'https://api.tdameritrade.com/v1/accounts/{}'.format(id)
 
         params = {}
         params.update({'Authorization': 'Bearer {}'.format(token)})
-        return requests.get(url, headers=params).json()
+        return requests.get(url, headers=params, timeout=60).json()
 
     def run_M1():
         Run(lock, 0, token, trade_balance, thresh, limit, m1)
