@@ -2,6 +2,7 @@ import requests
 import time
 import json
 import math
+from security import safe_requests
 
 key = "OPE9A7YLKQXGTWXJAFLIAEBIEXT4NXWU"
 id = 270508762
@@ -16,7 +17,7 @@ def Run1(Lock, index, token, balance, t, l, m):
         params.update({'direction': d})
         params.update({'change': c})
 
-        movers = requests.get(url, params=params).json()
+        movers = safe_requests.get(url, params=params).json()
         Movers = {}
 
         if movers[index]["last"] < l:
@@ -31,7 +32,7 @@ def Run1(Lock, index, token, balance, t, l, m):
         params = {}
         params.update({'apikey': key})
 
-        price = requests.get(url, params=params).json()
+        price = safe_requests.get(url, params=params).json()
         price = price[s]["lastPrice"]
         return price
 

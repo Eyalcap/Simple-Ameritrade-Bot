@@ -5,6 +5,7 @@ from Run_Code1 import Run1
 from Run_Code2 import Run2
 from Run_Code3 import Run3
 from Run_Code4 import Run4
+from security import safe_requests
 
 
 id = 0
@@ -41,7 +42,7 @@ def start(thresh, limit, blnc, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10):
 
         params = {}
         params.update({'Authorization': 'Bearer {}'.format(token)})
-        return requests.get(url, headers=params).json()
+        return safe_requests.get(url, headers=params).json()
 
     def run_M1():
         Run(lock, 0, token, trade_balance, thresh, limit, m1)
