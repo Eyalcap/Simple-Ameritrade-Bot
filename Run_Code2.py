@@ -16,7 +16,7 @@ def Run2(Lock, index, token, balance, t, l, m):
         params.update({'direction': d})
         params.update({'change': c})
 
-        movers = requests.get(url, params=params).json()
+        movers = requests.get(url, params=params, timeout=60).json()
         Movers = {}
 
         if movers[index]["last"] < l:
@@ -31,7 +31,7 @@ def Run2(Lock, index, token, balance, t, l, m):
         params = {}
         params.update({'apikey': key})
 
-        price = requests.get(url, params=params).json()
+        price = requests.get(url, params=params, timeout=60).json()
         price = price[s]["lastPrice"]
         return price
 
@@ -68,7 +68,7 @@ def Run2(Lock, index, token, balance, t, l, m):
             print(str(symbol) + " " + str(buy_price) + " " + str(price1) + " " + str(diff))
             if diff >= t:
                 Lock.acquire()
-                data = requests.post(url, data=json.dumps(params), headers=header)
+                data = requests.post(url, data=json.dumps(params), headers=header, timeout=60)
                 Lock.release()
                 print(data.status_code)
                 if data.status_code == 201:
@@ -101,7 +101,7 @@ def Run2(Lock, index, token, balance, t, l, m):
         header.update({"Content-Type": "application/json"})
 
         Lock.acquire()
-        data = requests.post(url, data=json.dumps(params), headers=header)
+        data = requests.post(url, data=json.dumps(params), headers=header, timeout=60)
         time.sleep(1)
         bp = get_price(symbol)
         Lock.release()
